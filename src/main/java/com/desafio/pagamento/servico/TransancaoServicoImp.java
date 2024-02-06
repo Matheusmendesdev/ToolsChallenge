@@ -1,4 +1,4 @@
-package com.desafio.pagamento.servico.util;
+package com.desafio.pagamento.servico;
 
 import com.desafio.pagamento.dto.TransacaoDTO;
 
@@ -10,8 +10,8 @@ public interface TransancaoServicoImp {
 
     TransacaoDTO processarEstorno(TransacaoDTO dto);
 
-    List<TransacaoDTO> buscarTodasTransacoes(List<TransacaoDTO> dto);
+    List<TransacaoDTO> buscarTodasTransacoes();
 
-    TransacaoDTO buscarPorIdTransacao(List<TransacaoDTO> dto);
+    TransacaoDTO buscarPorIdPagamento(String id);
 
 }

@@ -3,8 +3,9 @@ package com.desafio.pagamento.servico;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-import com.desafio.pagamento.servico.util.TransancaoServicoImp;
+import com.desafio.pagamento.exception.TransacaoNaoEncontradaException;
 import org.springframework.stereotype.Service;
 
 import com.desafio.pagamento.dto.TransacaoDTO;
@@ -40,12 +41,15 @@ public class TransacaoServico implements TransancaoServicoImp {
 	}
 
 	@Override
-	public List<TransacaoDTO> buscarTodasTransacoes(List<TransacaoDTO> dto) {
-		return dto;
+	public List<TransacaoDTO> buscarTodasTransacoes() {
+		return pagamentos;
 	}
 
 	@Override
-	public TransacaoDTO buscarPorIdTransacao(List<TransacaoDTO> dto) {
-		return null;
+	public TransacaoDTO buscarPorIdPagamento(String id) {
+		Optional<TransacaoDTO> transacao = pagamentos.stream()
+						.filter(p -> p.getDto().getId().equals(id))
+						.findFirst();
+		return transacao.orElseThrow(() -> new TransacaoNaoEncontradaException("Transação não encontrada!"));
 	}
 }

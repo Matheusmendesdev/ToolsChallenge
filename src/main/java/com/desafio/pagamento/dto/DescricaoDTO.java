@@ -1,6 +1,7 @@
 package com.desafio.pagamento.dto;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import com.desafio.pagamento.dto.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -75,6 +76,17 @@ public class DescricaoDTO {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		DescricaoDTO that = (DescricaoDTO) o;
+		return Objects.equals(valor, that.valor) && Objects.equals(dataHora, that.dataHora) && Objects.equals(estabelecimento, that.estabelecimento) && Objects.equals(nsu, that.nsu) && Objects.equals(codigoAutorizacao, that.codigoAutorizacao) && status == that.status;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(valor, dataHora, estabelecimento, nsu, codigoAutorizacao, status);
+	}
 }

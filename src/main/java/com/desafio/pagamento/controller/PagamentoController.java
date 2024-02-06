@@ -5,29 +5,37 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.desafio.pagamento.dto.TransacaoDTO;
 import com.desafio.pagamento.servico.TransacaoServico;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/")
 public class PagamentoController {
 
 	@Autowired
-	private TransacaoServico pagamentoServico;
+	private TransacaoServico transacaoServico;
 
 	@PostMapping("pagamento")
 	public ResponseEntity<TransacaoDTO> realizarPagamento(@Valid @RequestBody TransacaoDTO dto) {
-		return new ResponseEntity<TransacaoDTO>(pagamentoServico.processarPagamento(dto), HttpStatus.CREATED);
+		return new ResponseEntity<TransacaoDTO>(transacaoServico.processarPagamento(dto), HttpStatus.CREATED);
 	}
 	
 	@PostMapping("estorno")
 	public ResponseEntity<TransacaoDTO> realizarEstorno(@Valid @RequestBody TransacaoDTO dto) {
-		return new ResponseEntity<TransacaoDTO>(pagamentoServico.processarEstorno(dto), HttpStatus.CREATED);
+		return new ResponseEntity<TransacaoDTO>(transacaoServico.processarEstorno(dto), HttpStatus.CREATED);
+	}
+
+	@GetMapping("transacoes")
+	public List<TransacaoDTO> buscarTodasTransacoes(){
+		return transacaoServico.buscarTodasTransacoes();
+	}
+	@GetMapping("transacao/{id}")
+	public TransacaoDTO buscarPorIdTransacaoPagamento(@PathVariable(value = "id") String id){
+		return transacaoServico.buscarPorIdPagamento(id);
 	}
 
 }

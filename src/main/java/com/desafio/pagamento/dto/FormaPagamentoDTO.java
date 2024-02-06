@@ -3,6 +3,8 @@ package com.desafio.pagamento.dto;
 import com.desafio.pagamento.dto.enums.Tipo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 public class FormaPagamentoDTO {
 	@JsonProperty("tipo")
 	private Tipo tipo;
@@ -29,4 +31,16 @@ public class FormaPagamentoDTO {
 		this.parcelas = parcelas;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		FormaPagamentoDTO that = (FormaPagamentoDTO) o;
+		return parcelas == that.parcelas && tipo == that.tipo;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(tipo, parcelas);
+	}
 }
