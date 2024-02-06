@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.desafio.pagamento.servico.util.TransancaoServicoImp;
 import org.springframework.stereotype.Service;
 
 import com.desafio.pagamento.dto.TransacaoDTO;
@@ -11,11 +12,11 @@ import com.desafio.pagamento.dto.enums.Status;
 import com.desafio.pagamento.servico.util.GerarNsuCodAutorizacao;
 
 @Service
-public class TransacaoServico {
+public class TransacaoServico implements TransancaoServicoImp {
 	
 	
 	List<TransacaoDTO> pagamentos = new ArrayList<>();
-	
+	@Override
 	public TransacaoDTO processarPagamento(TransacaoDTO dto) {
 		Map<String, String> nsucodaut = GerarNsuCodAutorizacao.ret();
 		
@@ -27,7 +28,7 @@ public class TransacaoServico {
 
 		return dto;
 	}
-	
+	@Override
 	public TransacaoDTO processarEstorno(TransacaoDTO dto) {
 		Map<String, String> nsucodaut = GerarNsuCodAutorizacao.ret();
 		
@@ -36,5 +37,15 @@ public class TransacaoServico {
 		dto.getDto().getDescricao().setStatus(Status.CANCELADO);
 		
 		return dto;
+	}
+
+	@Override
+	public List<TransacaoDTO> buscarTodasTransacoes(List<TransacaoDTO> dto) {
+		return dto;
+	}
+
+	@Override
+	public TransacaoDTO buscarPorIdTransacao(List<TransacaoDTO> dto) {
+		return null;
 	}
 }

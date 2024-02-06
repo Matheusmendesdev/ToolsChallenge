@@ -23,16 +23,16 @@ import com.desafio.pagamento.servico.TransacaoServico;
 @SpringBootTest
 public class TransacaoControllerTests {
 
-	@Autowired
-	private MockMvc mockMvc;
-	
-	@MockBean
-	private TransacaoServico transacaoServico;
-	
-	@Test
-	public void testCriarTransacao() throws Exception {
-		
-		Descricao descricaoMock = mock(Descricao.class);
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private TransacaoServico transacaoServico;
+
+    @Test
+    public void testCriarTransacao() throws Exception {
+
+        Descricao descricaoMock = mock(Descricao.class);
         when(descricaoMock.getValor()).thenReturn("100.00");
         when(descricaoMock.getDataHora()).thenReturn(LocalDateTime.of(2021, 5, 1, 18, 30, 0));
         when(descricaoMock.getEstabelecimento()).thenReturn("Teste");
@@ -54,7 +54,6 @@ public class TransacaoControllerTests {
         assertEquals("132546", descricaoTransacaoMock.getId());
         assertEquals("132546", descricaoTransacaoMock.getCartao());
         assertEquals(descricaoMock, descricaoTransacaoMock.getDescricao());
-        assertEquals(formaPagamentoMock, descricaoTransacaoMock.getFormaPagamento());	
-	}
+        assertEquals(formaPagamentoMock, descricaoTransacaoMock.getFormaPagamento());
+    }
 }
-
