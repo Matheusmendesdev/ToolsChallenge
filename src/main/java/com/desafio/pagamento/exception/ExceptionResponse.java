@@ -1,11 +1,14 @@
 package com.desafio.pagamento.exception;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class ExceptionResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date timestamp;
     private String message;
     private String details;

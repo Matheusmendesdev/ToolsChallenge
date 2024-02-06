@@ -30,12 +30,17 @@ public class PagamentoController {
 	}
 
 	@GetMapping("transacoes")
-	public List<TransacaoDTO> buscarTodasTransacoes(){
-		return transacaoServico.buscarTodasTransacoes();
-	}
-	@GetMapping("transacao/{id}")
-	public TransacaoDTO buscarPorIdTransacaoPagamento(@PathVariable(value = "id") String id){
-		return transacaoServico.buscarPorIdPagamento(id);
+	public ResponseEntity<List<TransacaoDTO>> buscarTodasTransacoes(){
+		return ResponseEntity.ok(transacaoServico.buscarTodasTransacoes());
 	}
 
+	@GetMapping("transacao/{id}")
+	public ResponseEntity<TransacaoDTO> buscarPorIdTransacaoPagamento(@PathVariable(value = "id") String id){
+		return ResponseEntity.ok(transacaoServico.buscarPorIdPagamento(id));
+	}
+
+	@GetMapping("estorno/{id}")
+	public ResponseEntity<TransacaoDTO> buscarPorIdTransacaoEstorno(@PathVariable(value = "id") String id){
+		return ResponseEntity.ok(transacaoServico.buscarPorIdEstorno(id));
+	}
 }
