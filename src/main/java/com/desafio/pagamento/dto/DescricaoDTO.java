@@ -7,15 +7,21 @@ import com.desafio.pagamento.dto.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class DescricaoDTO {
 	@JsonProperty("valor")
+	@NotBlank
 	private String valor;
 	
 	@JsonProperty("dataHora")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@NotNull
 	private LocalDateTime dataHora;
 	
 	@JsonProperty("estabelecimento")
+	@NotBlank
 	private String estabelecimento;
 	
 	@JsonProperty("nsu")

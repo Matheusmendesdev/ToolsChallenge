@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.desafio.pagamento.dto.TransacaoDTO;
@@ -20,12 +21,12 @@ public class PagamentoController {
 	private TransacaoServico transacaoServico;
 
 	@PostMapping("pagamento")
-	public ResponseEntity<TransacaoDTO> realizarPagamento(@Valid @RequestBody TransacaoDTO dto) {
+	public ResponseEntity<TransacaoDTO> realizarPagamento(@Validated @RequestBody TransacaoDTO dto) {
 		return new ResponseEntity<TransacaoDTO>(transacaoServico.processarPagamento(dto), HttpStatus.CREATED);
 	}
 	
 	@PostMapping("estorno")
-	public ResponseEntity<TransacaoDTO> realizarEstorno(@Valid @RequestBody TransacaoDTO dto) {
+	public ResponseEntity<TransacaoDTO> realizarEstorno(@Validated @RequestBody TransacaoDTO dto) {
 		return new ResponseEntity<TransacaoDTO>(transacaoServico.processarEstorno(dto), HttpStatus.CREATED);
 	}
 

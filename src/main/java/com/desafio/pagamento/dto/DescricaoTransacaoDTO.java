@@ -2,20 +2,26 @@ package com.desafio.pagamento.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class DescricaoTransacaoDTO {
 	
 	@JsonProperty("cartao")
+	@NotNull
 	private String cartao;
 	
 	@JsonProperty("id")
+	@NotNull
 	private String id;
 	
 	@JsonProperty("descricao")
+	@NotNull
 	private DescricaoDTO descricao;
 	
 	@JsonProperty("formaPagamento")
+	@NotNull
 	private FormaPagamentoDTO formaPagamento;
 	
 	public DescricaoTransacaoDTO() {}
