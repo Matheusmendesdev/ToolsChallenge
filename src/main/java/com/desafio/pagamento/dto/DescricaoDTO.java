@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class DescricaoDTO {
@@ -21,7 +22,7 @@ public class DescricaoDTO {
 	private LocalDateTime dataHora;
 	
 	@JsonProperty("estabelecimento")
-	@NotBlank
+	@NotEmpty
 	private String estabelecimento;
 	
 	@JsonProperty("nsu")

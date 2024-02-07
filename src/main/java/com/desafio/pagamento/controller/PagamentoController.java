@@ -35,7 +35,7 @@ public class PagamentoController {
 		return ResponseEntity.ok(transacaoServico.buscarTodasTransacoes());
 	}
 
-	@GetMapping("transacao/{id}")
+	@GetMapping("pagamento/{id}")
 	public ResponseEntity<TransacaoDTO> buscarPorIdTransacaoPagamento(@PathVariable(value = "id") String id){
 		return ResponseEntity.ok(transacaoServico.buscarPorIdPagamento(id));
 	}

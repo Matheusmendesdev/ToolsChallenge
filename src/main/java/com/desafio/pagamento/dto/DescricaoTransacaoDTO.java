@@ -3,17 +3,18 @@ package com.desafio.pagamento.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class DescricaoTransacaoDTO {
 	
 	@JsonProperty("cartao")
-	@NotNull
+	@NotEmpty
 	private String cartao;
 	
 	@JsonProperty("id")
-	@NotNull
+	@NotEmpty
 	private String id;
 	
 	@JsonProperty("descricao")

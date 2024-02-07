@@ -3,13 +3,16 @@ package com.desafio.pagamento.dto;
 import com.desafio.pagamento.dto.enums.Tipo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class FormaPagamentoDTO {
 	@JsonProperty("tipo")
+	@NotEmpty
 	private Tipo tipo;
 
 	@JsonProperty("parcelas")
+	@NotEmpty
 	private int parcelas;
 
 	public FormaPagamentoDTO() {
