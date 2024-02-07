@@ -2,7 +2,11 @@ package com.desafio.pagamento.servico;
 
 import java.util.*;
 
+import com.desafio.pagamento.entidade.Transacao;
 import com.desafio.pagamento.exception.TransacaoNaoEncontradaException;
+import com.desafio.pagamento.modelmapper.ModelMapperConfig;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.desafio.pagamento.dto.TransacaoDTO;
@@ -11,6 +15,17 @@ import com.desafio.pagamento.servico.util.GerarNsuCodAutorizacao;
 
 @Service
 public class TransacaoServico implements TransancaoServicoImp {
+
+	//Suporte para ModelMapper para converter DTO em Entity e vice-versa
+	@Autowired
+	private ModelMapper modelMapper;
+
+	public TransacaoDTO converterParaDTO(Transacao transacao) {
+		return modelMapper.map(transacao, TransacaoDTO.class);
+	}
+	public Transacao convertParaEntity(TransacaoDTO transacaoDTO) {
+		return modelMapper.map(transacaoDTO, Transacao.class);
+	}
 
 	List<TransacaoDTO> pagamentos = new ArrayList<>();
 	@Override
