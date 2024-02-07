@@ -2,6 +2,7 @@ package com.desafio.pagamento.exception.handler;
 
 import com.desafio.pagamento.exception.ExceptionResponse;
 import com.desafio.pagamento.exception.ObjetoNullException;
+import com.desafio.pagamento.exception.TransacaoIdNaoEncontradoException;
 import com.desafio.pagamento.exception.TransacaoNaoEncontradaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,14 @@ public class RespostaCustumizadaEntityExceptionHandler extends ResponseEntityExc
 
     @ExceptionHandler(TransacaoNaoEncontradaException.class)
     public final ResponseEntity<ExceptionResponse> handlerBadRequestExceptions(Exception ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(), ex.getMessage(), request.getDescription(false)
+        );
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TransacaoIdNaoEncontradoException.class)
+    public final ResponseEntity<ExceptionResponse> handlerIdBadRequestExceptions(Exception ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 new Date(), ex.getMessage(), request.getDescription(false)
         );

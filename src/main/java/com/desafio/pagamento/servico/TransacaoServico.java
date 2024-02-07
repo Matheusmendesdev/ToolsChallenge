@@ -3,15 +3,15 @@ package com.desafio.pagamento.servico;
 import java.util.*;
 
 import com.desafio.pagamento.entidade.Transacao;
+import com.desafio.pagamento.exception.TransacaoIdNaoEncontradoException;
 import com.desafio.pagamento.exception.TransacaoNaoEncontradaException;
-import com.desafio.pagamento.modelmapper.ModelMapperConfig;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.desafio.pagamento.dto.TransacaoDTO;
 import com.desafio.pagamento.dto.enums.Status;
-import com.desafio.pagamento.servico.util.GerarNsuCodAutorizacao;
+import com.desafio.pagamento.servico.util.ServicoProcessamentoDados;
 
 @Service
 public class TransacaoServico implements TransancaoServicoImp {
@@ -30,14 +30,14 @@ public class TransacaoServico implements TransancaoServicoImp {
 	List<TransacaoDTO> pagamentos = new ArrayList<>();
 	@Override
 	public TransacaoDTO processarPagamento(TransacaoDTO dto) {
-		Map<String, String> nsucodaut = GerarNsuCodAutorizacao.gerador();
+		boolean idExiste = pagamentos.stream().anyMatch(transacao -> transacao.getDto().getId().equals(dto.getDto().getId())
+		&& transacao.getDto().getDescricao().getStatus() == Status.AUTORIZADO);
 
-		double valor = Double.parseDouble(dto.getDto().getDescricao().getValor()) * 0.9;
+		if (idExiste){
+			throw new TransacaoIdNaoEncontradoException("Já existe uma transição de PAGAMENTO processado com esse ID.");
+		}
 
-		dto.getDto().getDescricao().setValor(String.valueOf(valor));
-		dto.getDto().getDescricao().setNsu(String.valueOf(nsucodaut.get("nsu")));
-		dto.getDto().getDescricao().setCodigoAutorizacao(String.valueOf(nsucodaut.get("codAutorizacao")));
-		dto.getDto().getDescricao().setStatus(Status.AUTORIZADO);
+		ServicoProcessamentoDados.setDadosDetalheNsuCodAutoStatusTransacao(dto, Status.AUTORIZADO);
 
 		pagamentos.add(dto);
 
@@ -45,11 +45,14 @@ public class TransacaoServico implements TransancaoServicoImp {
 	}
 	@Override
 	public TransacaoDTO processarEstorno(TransacaoDTO dto) {
-		Map<String, String> nsucodaut = GerarNsuCodAutorizacao.gerador();
-		
-		dto.getDto().getDescricao().setNsu(String.valueOf(nsucodaut.get("nsu")));
-		dto.getDto().getDescricao().setCodigoAutorizacao(String.valueOf(nsucodaut.get("codAutorizacao")));
-		dto.getDto().getDescricao().setStatus(Status.CANCELADO);
+		boolean idExiste = pagamentos.stream().anyMatch(transacao -> transacao.getDto().getId().equals(dto.getDto().getId())
+				&& transacao.getDto().getDescricao().getStatus() == Status.CANCELADO);
+
+		if (idExiste){
+			throw new TransacaoIdNaoEncontradoException("Já existe uma transição de ESTORNO processado com esse ID.");
+		}
+
+		ServicoProcessamentoDados.setDadosDetalheNsuCodAutoStatusTransacao(dto, Status.CANCELADO);
 
 		pagamentos.add(dto);
 

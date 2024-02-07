@@ -1,8 +1,8 @@
 package com.desafio.pagamento;
-
 import com.desafio.pagamento.dto.enums.Status;
 import com.desafio.pagamento.entidade.Descricao;
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -41,4 +41,5 @@ public class TransacaoServiceMetodosTest {
         assertEquals("555555555", transacao.getCodigoAutorizacao());
         assertEquals(Status.CANCELADO, transacao.getStatus());
     }
+
 }

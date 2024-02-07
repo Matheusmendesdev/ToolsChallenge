@@ -1,12 +1,12 @@
 # Desafio pagamento-API
 
-API de pagamento que realiza processamento de solicitaçoes de compra por boleto e cartão de crédito. 
-Para o processamento é necessário enviar os dados do cliente, comprador, forma de pagamento e o cartão de crédito quando a forma de pagamento é cartão de crédito.
-A API verifica se o cartão de crédito é válido, verifica se o cliente e o comprador já existe no sistema, caso já existam ela vincula os mesmos com o pagamento a ser processado. Quando a forma de pagamento é boleto a API gera um boleto e retorna o boleto gerado.
+API de pagamento/estorno que realiza processamento de solicitaçoes de compra/estorno, á vista, parcelado em loja e parcelado pelo emissor. 
+Para o processamento é necessário enviar os dados do cartão, descrição do produto e forma de pagamento.
+A API verifica se o endpoint para pagamento é válido, verifica se o id já existe no sistema, caso já existam ela retorna uma exception.
 A API permite consultar os dados do pagamento enviado para processamento.
 
 ## Tecnologias Utilizadas
-O projeto foi criado com Spring Boot na linguagem de programação Java com BD MySQL, Spring Data JPA e realizado testes unitários com JUnit.
+O projeto foi criado com Spring Boot na linguagem de programação Java versão 11 com BD em memória, ModelMapper (apenas suporte para uma eventual implementação do banco de dados) e realizado testes unitários com JUnit.
 
 ## Arquitetura 
 O projeto está divido nas seguintes camadas:
@@ -19,61 +19,40 @@ O projeto está divido nas seguintes camadas:
 5. DTO
 6. Converte
 7. Exceção
+8. Testes Unitários
 
 *test:*
 1. Serviço
+2. Entidade
 
 ## Como executar
 1. Clonar o projeto
-2. Ter instalado o BD MySQL 
-3. Configurar no aplication.properties a conexão do BD
 4. Executar no terminal o comando: ``mvn spring-boot:run``
-5. Realizar o cadastro de um Cliente no BD
+5. Realizar uma transação de pagamento/estorno de um Cliente em memória
 
 ## Como testar 
-O sistema possui dois endpoint: 
-1. **``POST api/v1/pagamentos``**: Requisita o processamento do pagamento que está enviando no corpo da solicitação.
-*Exemplo do corpo da requisição para Cartão de Crédito:*
+O sistema possui 5 endpoint: 
+
+1. **``POST api/v1/pagamento``** **``POST api/v1/estorno``**: Requisita o processamento do pagamento/estorno que está enviando no corpo da solicitação.
+*Exemplo do corpo da requisição para ambos:*
 ```javascript
 {
-	"pagamento" :{
-		"valor": 233.52,
-		"forma" : "CARTAO_CREDITO",
-		"cartao":{
-			"name":"Ana Carla",
-			"numero": "379933881288935",
-			"dataValidade": "2020-06-27",
-			"cvv": "377"
-		}
-	},
-	"cliente":{
-		"idCliente":1
-	},
-	"comprador":{
-		"nome":"Amanda",
-		"email": "amanda.adsilva@gmail.com",
-		"cpf": "95099846041"
-	}
+    "transacao": {
+        "cartao": "123456789010",
+        "id": "123444",
+        "descricao": {
+            "valor": "5000.00",
+            "dataHora": "05/02/2024 19:00:00",
+            "estabelecimento": "Mecanica"
+        },
+        "formaPagamento": {
+            "tipo": "AVISTA",
+            "parcelas": 1
+        }
+    }
 }
 ```
 
-*Exemplo do corpo da requisição para Boleto:*
-```javascript
-{
-	"pagamento" :{
-		"valor": 233.52,
-		"forma" : "BOLETO"
-	},
-	"cliente":{
-		"idCliente":1
-	},
-	"comprador":{
-		"nome":"Amanda",
-		"email": "amanda.adsilva@gmail.com",
-		"cpf": "95099846041"
-	}
-}
-```
+2. **``GET api/v1/pagamento/{id}``** **``GET api/v1/estorno/{id}``**: Requisita os dados do pagamento/estorno do id informado na URL
 
-2. **``GET api/v1/pagamentos/{id}``**: Requisita os dados do pagamento do id informado na URL
-
+3. **``GET api/v1/transacoes``**: Requisita todos os dados do pagamento/estorno
