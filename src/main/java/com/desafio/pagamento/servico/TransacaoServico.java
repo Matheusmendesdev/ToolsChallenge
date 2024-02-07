@@ -68,7 +68,7 @@ public class TransacaoServico implements TransancaoServicoImp {
 				return pagamento;
 			}
 		}
-		throw new TransacaoNaoEncontradaException("Transação estorno não encontrada!");
+		throw new TransacaoNaoEncontradaException("Transação pagamento não encontrada!");
 	}
 
 	@Override
