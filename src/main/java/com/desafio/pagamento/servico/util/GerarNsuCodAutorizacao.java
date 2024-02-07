@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class GerarNsuCodAutorizacao {
 	
-	public static Map<String, String> ret(){
+	public static Map<String, String> gerador(){
 		Map<String, String> nsuCodAutMap = new HashMap<String, String>();
 		
 		Random random = new Random();

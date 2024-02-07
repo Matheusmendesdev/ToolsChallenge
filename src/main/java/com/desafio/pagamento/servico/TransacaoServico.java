@@ -16,7 +16,7 @@ public class TransacaoServico implements TransancaoServicoImp {
 	List<TransacaoDTO> pagamentos = new ArrayList<>();
 	@Override
 	public TransacaoDTO processarPagamento(TransacaoDTO dto) {
-		Map<String, String> nsucodaut = GerarNsuCodAutorizacao.ret();
+		Map<String, String> nsucodaut = GerarNsuCodAutorizacao.gerador();
 
 		//Convertendo o atributo "valor" para Double e fazendo calculo para retornar o valor correto na resposta da requisição, conforme mostra nos exemplos do teste proposto.
 		double valor = Double.parseDouble(dto.getDto().getDescricao().getValor()) * 0.9;
@@ -32,7 +32,7 @@ public class TransacaoServico implements TransancaoServicoImp {
 	}
 	@Override
 	public TransacaoDTO processarEstorno(TransacaoDTO dto) {
-		Map<String, String> nsucodaut = GerarNsuCodAutorizacao.ret();
+		Map<String, String> nsucodaut = GerarNsuCodAutorizacao.gerador();
 		
 		dto.getDto().getDescricao().setNsu(String.valueOf(nsucodaut.get("nsu")));
 		dto.getDto().getDescricao().setCodigoAutorizacao(String.valueOf(nsucodaut.get("codAutorizacao")));
