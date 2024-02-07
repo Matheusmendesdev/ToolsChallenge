@@ -11,14 +11,12 @@ import com.desafio.pagamento.servico.util.GerarNsuCodAutorizacao;
 
 @Service
 public class TransacaoServico implements TransancaoServicoImp {
-	
-	
+
 	List<TransacaoDTO> pagamentos = new ArrayList<>();
 	@Override
 	public TransacaoDTO processarPagamento(TransacaoDTO dto) {
 		Map<String, String> nsucodaut = GerarNsuCodAutorizacao.gerador();
 
-		//Convertendo o atributo "valor" para Double e fazendo calculo para retornar o valor correto na resposta da requisição, conforme mostra nos exemplos do teste proposto.
 		double valor = Double.parseDouble(dto.getDto().getDescricao().getValor()) * 0.9;
 
 		dto.getDto().getDescricao().setValor(String.valueOf(valor));
