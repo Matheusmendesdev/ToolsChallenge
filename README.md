@@ -1,4 +1,4 @@
-# Desafio pagamento-API
+# Desafio ToolsChallenge-API
 
 API de pagamento/estorno que realiza processamento de solicitaçoes de compra/estorno, á vista, parcelado em loja e parcelado pelo emissor. 
 Para o processamento é necessário enviar os dados do cartão, descrição do produto e forma de pagamento.
